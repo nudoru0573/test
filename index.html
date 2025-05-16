@@ -1,80 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <title>１セメスタ用 出席確認 ‼非公式‼</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #000;
-            margin: 20px;
-            text-align: left; /* 左寄せ */
-        }
-        h1 {
-            color: #4169e1;
-            text-decoration: underline;
-            text-align: left; /* 左寄せ */
-        }
-        h2 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            text-align: left; /* 左寄せ */
-        }
-        a {
-            text-decoration: none;
-            font-weight: bold;
-            color: #222;
-            transition: color 0.3s ease;
-            display: block;
-            padding: 5px 0;
-            text-align: left; /* 左寄せ */
-        }
-        a:hover {
-            color: #555;
-        }
-        .box5 {
-            background-color: #e0f7fa;
-            padding: 15px;
-            border-radius: 5px;
-            width: 100%;
-            margin: 10px auto;
-            text-align: left; /* 左寄せ */
-        }
-        hr {
-            border: 1px solid #000;
-            margin: 20px 0;
-        }
-        @media screen and (max-width: 600px) {
-            body {
-                font-size: 16px;
-                max-width: 95%;
-            }
-            h1 {
-                font-size: 22px;
-            }
-            h2 {
-                font-size: 18px;
-            }
-            .box5 {
-                width: 100%;
-            }
-            a {
-                font-size: 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>出席登録フォーム</title>
 </head>
 <body>
-    <h1>１セメスタ用 出席確認 ‼非公式‼</h1>
-    <hr>
+  <h1>出席登録</h1>
+  <form id="attendance-form">
+    <input type="text" name="name" placeholder="名前" required>
+    <input type="text" name="class" placeholder="授業名" required>
+    <button type="submit">送信</button>
+  </form>
 
-    <h1>月曜日</h1>
-    <div class="box5">
-        <a href="https://attendance.is.it-chiba.ac.jp/attendance/class_room/5204">英語理解１ gクラス(5204)</a>
-        <a href="https://attendance.is.it-chiba.ac.jp/attendance/class_room/7202">数学基礎 bcクラス(7202)</a>
-    </div>
-    <hr>
+  <script>
+    document.getElementById('attendance-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {
+        name: formData.get('name'),
+        className: formData.get('class')
+      };
+
+      fetch('http://localhost:8080/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("送信成功！");
+        } else {
+          alert("送信失敗");
+        }
+      });
+    });
+  </script>
 </body>
 </html>

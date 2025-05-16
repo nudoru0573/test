@@ -2,39 +2,17 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>出席登録フォーム</title>
+  <title>出席確認フォーム</title>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>出席登録</h1>
-  <form id="attendance-form">
-    <input type="text" name="name" placeholder="名前" required>
-    <input type="text" name="class" placeholder="授業名" required>
+  <h1>出席確認</h1>
+  <form id="submitForm">
+    <label>名前：<input type="text" name="name" required></label><br>
+    <label>メール：<input type="email" name="email" required></label><br>
+    <label>メッセージ：<textarea name="message" required></textarea></label><br>
     <button type="submit">送信</button>
   </form>
-
-  <script>
-    document.getElementById('attendance-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-      const data = {
-        name: formData.get('name'),
-        className: formData.get('class')
-      };
-
-      fetch('http://localhost:8080/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("送信成功！");
-        } else {
-          alert("送信失敗");
-        }
-      });
-    });
-  </script>
+  <p id="response"></p>
 </body>
 </html>
